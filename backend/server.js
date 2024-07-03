@@ -1,10 +1,14 @@
 const express = require('express') 
-require('dotenv').config()
+require('dotenv').config() 
+const workoutRoutes = require('./routes/workouts') 
+
 
 // app
 const app = express() 
 
 // middleware
+app.use(express.json()) //saves post information to request body and allows you to access it
+
 app.use((req, res, next) => { 
     console.log(req.path, req.method) 
     next()
@@ -12,11 +16,7 @@ app.use((req, res, next) => {
 
 
 // routes
-app.get('/', (req, res) => { 
-    res.json({ 
-        mssg: "welcome to the app"
-    })
-})
+app.use('/api/workouts', workoutRoutes)
 
 // listen for request
 app.listen(process.env.PORT, () => { 
